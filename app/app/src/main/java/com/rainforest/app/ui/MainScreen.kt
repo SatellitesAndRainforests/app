@@ -18,16 +18,16 @@ import com.rainforest.app.viewmodel.MainViewModel
 
 @Composable
 fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltViewModel()) {
-    val items by viewModel.items.collectAsState()
+    val items = listOf("1","2","3")
 
     LazyColumn {
         items(items) { item ->
             Text(
-                text = item.name,
+                text = item,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        navController.navigate("detail/${item.id}")
+                        navController.navigate("detail/1")
                     }
                     .padding(16.dp)
             )

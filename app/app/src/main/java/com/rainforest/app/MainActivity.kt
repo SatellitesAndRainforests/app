@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp {
-                Greeting("Android")
+                AppNavigator()
             }
         }
     }
@@ -38,14 +38,24 @@ fun MyApp(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun AppNavigator() {
+    val navController = rememberNavController()
+    NavHost(navController, startDestination = "main") {
+        composable("main") { MainScreen(navController) }
+        composable("detail/{itemId}") { backStackEntry ->
+            val itemId = backStackEntry.arguments?.getString("itemId")?.toIntOrNull()
+            itemId?.let {
+                DetailScreen(itemId = it)
+            }
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyApp {
-        Greeting("Android")
+        AppNavigator()
     }
 }
+
